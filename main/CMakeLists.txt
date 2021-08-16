@@ -1,0 +1,5 @@
+#set(COMPONENT_SRCS "spi_oled_example_main.c")
+set(COMPONENT_SRCDIRS "src")
+set(COMPONENT_ADD_INCLUDEDIRS "include")
+set(COMPONENT_REQUIRES)
+register_component()
