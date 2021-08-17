@@ -1,6 +1,7 @@
 #include <OLED_1in3_c.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -13,7 +14,7 @@
 #include "driver/spi.h"
 #include <oledfont.h>
 static const char *TAG = "OLED_1in3_c";
-uint8_t OLED_GRAM[144][8];
+uint8_t OLED_GRAM[128][8];
 void OLED_1li3_SystemInit(void)
 {
     gpio_config_t io_conf;
@@ -41,7 +42,7 @@ void OLED_1li3_SystemInit(void)
     // 8266 Only support half-duplex
     spi_config.mode = SPI_MASTER_MODE;
     // Set the SPI clock frequency division factor
-    spi_config.clk_div = SPI_10MHz_DIV;
+    spi_config.clk_div = SPI_40MHz_DIV;
     // Register SPI event callback function
     spi_config.event_cb = NULL;
     ESP_ERROR_CHECK(spi_init(HSPI_HOST, &spi_config));
@@ -102,14 +103,13 @@ void OLED_1in3_DriverInit(void)
     OLED_1li3_WriteCommand(0x02); //
     OLED_1li3_WriteCommand(0xAa); // Disable Entire Display On (0xa4/0xa5)
     OLED_1li3_WriteCommand(0xA6); // Disable Inverse Display On (0xa6/a7)
-    OLED_1li3_WriteCommand(0xC8);
-    OLED_1li3_WriteCommand(0xA1);
+    OLED_1li3_WriteCommand(0xC0);
+    OLED_1li3_WriteCommand(0xA0);
     OLED_1in3_ClearAll();
     OLED_1li3_WriteCommand(0xAF); /*display ON*/
 
     //OLED_1in3_ReverseColor(0);
-   // OLED_1in3_RotateShow(1);
-
+    // OLED_1in3_RotateShow(1);
 }
 
 /********************************************************************************
@@ -200,51 +200,54 @@ void OLED_1in3_S_Pos(uint8_t x, uint8_t y)
 }
 void OLED_1li3_Refresh(void)
 {
-	uint8_t i,n;
-	for(i=0;i<8;i++)
-	{
-	   OLED_1li3_WriteCommand(0xb0+i); //设置行起始地址
-	   OLED_1li3_WriteCommand(0x02);   //设置低列起始地址
-	   OLED_1li3_WriteCommand(0x10);   //设置高列起始地址
-	   for(n=0;n<128;n++)
-		 OLED_1li3_WriteData(OLED_GRAM[n][i]);
-  }
+    uint8_t i, n;
+    for (i = 0; i < 8; i++)
+    {
+        OLED_1li3_WriteCommand(0xb0 + i); //设置行起始地址
+        OLED_1li3_WriteCommand(0x02);     //设置低列起始地址
+        OLED_1li3_WriteCommand(0x10);     //设置高列起始地址
+        for (n = 0; n < 128; n++)
+            OLED_1li3_WriteData(OLED_GRAM[n][i]);
+    }
 }
-void OLED_1li3_DrawPoint(uint8_t x,uint8_t y,uint8_t t)
+void OLED_1li3_DrawPoint(uint8_t x, uint8_t y, uint8_t t)
 {
-	uint8_t i,m,n;
-	i=y/8;
-	m=y%8;
-	n=1<<m;
-	if(t){OLED_GRAM[x][i]|=n;}
-	else
-	{
-		OLED_GRAM[x][i]=~OLED_GRAM[x][i];
-		OLED_GRAM[x][i]|=n;
-		OLED_GRAM[x][i]=~OLED_GRAM[x][i];
-	}
+    uint8_t i, m, n;
+    i = y / 8;
+    m = y % 8;
+    n = 1 << m;
+    if (t)
+    {
+        OLED_GRAM[x][i] |= n;
+    }
+    else
+    {
+        OLED_GRAM[x][i] = ~OLED_GRAM[x][i];
+        OLED_GRAM[x][i] |= n;
+        OLED_GRAM[x][i] = ~OLED_GRAM[x][i];
+    }
 }
 
-void OLED_1li3_DrawCircle(uint8_t x,uint8_t y,uint8_t r)
+void OLED_1li3_DrawCircle(uint8_t x, uint8_t y, uint8_t r)
 {
-	int a, b,num;
+    int a, b, num;
     a = 0;
     b = r;
-    while(2 * b * b >= r * r)      
+    while (2 * b * b >= r * r)
     {
-        OLED_1li3_DrawPoint(x + a, y - b,1);
-        OLED_1li3_DrawPoint(x - a, y - b,1);
-        OLED_1li3_DrawPoint(x - a, y + b,1);
-        OLED_1li3_DrawPoint(x + a, y + b,1);
- 
-        OLED_1li3_DrawPoint(x + b, y + a,1);
-        OLED_1li3_DrawPoint(x + b, y - a,1);
-        OLED_1li3_DrawPoint(x - b, y - a,1);
-        OLED_1li3_DrawPoint(x - b, y + a,1);
-        
+        OLED_1li3_DrawPoint(x + a, y - b, 1);
+        OLED_1li3_DrawPoint(x - a, y - b, 1);
+        OLED_1li3_DrawPoint(x - a, y + b, 1);
+        OLED_1li3_DrawPoint(x + a, y + b, 1);
+
+        OLED_1li3_DrawPoint(x + b, y + a, 1);
+        OLED_1li3_DrawPoint(x + b, y - a, 1);
+        OLED_1li3_DrawPoint(x - b, y - a, 1);
+        OLED_1li3_DrawPoint(x - b, y + a, 1);
+
         a++;
-        num = (a * a + b * b) - r*r;//计算画的点离圆心的距离
-        if(num > 0)
+        num = (a * a + b * b) - r * r; //计算画的点离圆心的距离
+        if (num > 0)
         {
             b--;
             a--;
@@ -252,109 +255,185 @@ void OLED_1li3_DrawCircle(uint8_t x,uint8_t y,uint8_t r)
     }
 }
 
-void OLED_1li3_DrawLine(uint8_t x1,uint8_t y1,uint8_t x2,uint8_t y2,uint8_t mode)
+void OLED_1li3_DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t mode)
 {
-	uint16_t t; 
-	int xerr=0,yerr=0,delta_x,delta_y,distance;
-	int incx,incy,uRow,uCol;
-	delta_x=x2-x1; //计算坐标增量 
-	delta_y=y2-y1;
-	uRow=x1;//画线起点坐标
-	uCol=y1;
-	if(delta_x>0)incx=1; //设置单步方向 
-	else if (delta_x==0)incx=0;//垂直线 
-	else {incx=-1;delta_x=-delta_x;}
-	if(delta_y>0)incy=1;
-	else if (delta_y==0)incy=0;//水平线 
-	else {incy=-1;delta_y=-delta_x;}
-	if(delta_x>delta_y)distance=delta_x; //选取基本增量坐标轴 
-	else distance=delta_y;
-	for(t=0;t<distance+1;t++)
-	{
-		OLED_1li3_DrawPoint(uRow,uCol,mode);//画点
-		xerr+=delta_x;
-		yerr+=delta_y;
-		if(xerr>distance)
-		{
-			xerr-=distance;
-			uRow+=incx;
-		}
-		if(yerr>distance)
-		{
-			yerr-=distance;
-			uCol+=incy;
-		}
-	}
+    uint16_t t;
+    int xerr = 0, yerr = 0, delta_x, delta_y, distance;
+    int incx, incy, uRow, uCol;
+    delta_x = x2 - x1; //计算坐标增量
+    delta_y = y2 - y1;
+    uRow = x1; //画线起点坐标
+    uCol = y1;
+    if (delta_x > 0)
+        incx = 1; //设置单步方向
+    else if (delta_x == 0)
+        incx = 0; //垂直线
+    else
+    {
+        incx = -1;
+        delta_x = -delta_x;
+    }
+    if (delta_y > 0)
+        incy = 1;
+    else if (delta_y == 0)
+        incy = 0; //水平线
+    else
+    {
+        incy = -1;
+        delta_y = -delta_x;
+    }
+    if (delta_x > delta_y)
+        distance = delta_x; //选取基本增量坐标轴
+    else
+        distance = delta_y;
+    for (t = 0; t < distance + 1; t++)
+    {
+        OLED_1li3_DrawPoint(uRow, uCol, mode); //画点
+        xerr += delta_x;
+        yerr += delta_y;
+        if (xerr > distance)
+        {
+            xerr -= distance;
+            uRow += incx;
+        }
+        if (yerr > distance)
+        {
+            yerr -= distance;
+            uCol += incy;
+        }
+    }
 }
 
-void OLED_1li3_Picture(uint8_t x,uint8_t y,uint8_t sizex,uint8_t sizey,uint8_t BMP[],uint8_t mode)
+void OLED_1li3_Picture(uint8_t x, uint8_t y, uint8_t sizex, uint8_t sizey, uint8_t BMP[], uint8_t mode)
 {
-	uint16_t j=0;
-	uint8_t i,n,temp,m;
-	uint8_t x0=x,y0=y;
-	sizey=sizey/8+((sizey%8)?1:0);
-	for(n=0;n<sizey;n++)
-	{
-		 for(i=0;i<sizex;i++)
-		 {
-				temp=BMP[j];
-				j++;
-				for(m=0;m<8;m++)
-				{
-					if(temp&0x01)OLED_1li3_DrawPoint(x,y,mode);
-					else OLED_1li3_DrawPoint(x,y,!mode);
-					temp>>=1;
-					y++;
-				}
-				x++;
-				if((x-x0)==sizex)
-				{
-					x=x0;
-					y0=y0+8;
-				}
-				y=y0;
-     }
-	 }
+    uint16_t j = 0;
+    uint8_t i, n, temp, m;
+    uint8_t x0 = x, y0 = y;
+    sizey = sizey / 8 + ((sizey % 8) ? 1 : 0);
+    for (n = 0; n < sizey; n++)
+    {
+        for (i = 0; i < sizex; i++)
+        {
+            temp = BMP[j];
+            j++;
+            for (m = 0; m < 8; m++)
+            {
+                if (temp & 0x01)
+                    OLED_1li3_DrawPoint(x, y, mode);
+                else
+                    OLED_1li3_DrawPoint(x, y, !mode);
+                temp >>= 1;
+                y++;
+            }
+            x++;
+            if ((x - x0) == sizex)
+            {
+                x = x0;
+                y0 = y0 + 8;
+            }
+            y = y0;
+        }
+    }
 }
-void OLED_1in3_Char(uint8_t x,uint8_t y,uint8_t chr,uint8_t size1,uint8_t mode)
+void OLED_1in3_Char(uint8_t x, uint8_t y, uint8_t chr, uint8_t size1, uint8_t mode)
 {
-	uint8_t i,m,temp,size2,chr1;
-	uint8_t x0=x,y0=y;
-	if(size1==8)size2=6;
-	else size2=(size1/8+((size1%8)?1:0))*(size1/2);  //得到字体一个字符对应点阵集所占的字节数
-	chr1=chr-' ';  //计算偏移后的值
-	for(i=0;i<size2;i++)
-	{
-		if(size1==8)
-			  {temp=asc2_0806[chr1][i];} //调用0806字体
-		else if(size1==12)
-        {temp=asc2_1206[chr1][i];} //调用1206字体
-		else if(size1==16)
-        {temp=asc2_1608[chr1][i];} //调用1608字体
-		else if(size1==24)
-        {temp=asc2_2412[chr1][i];} //调用2412字体
-		else return;
-		for(m=0;m<8;m++)
-		{
-			if(temp&0x01)OLED_1li3_DrawPoint(x,y,mode);
-			else OLED_1li3_DrawPoint(x,y,!mode);
-			temp>>=1;
-			y++;
-		}
-		x++;
-		if((size1!=8)&&((x-x0)==size1/2))
-		{x=x0;y0=y0+8;}
-		y=y0;
-  }
+    uint8_t i, m, temp, size2, chr1;
+    uint8_t x0 = x, y0 = y;
+    if (size1 == 8)
+        size2 = 6;
+    else
+        size2 = (size1 / 8 + ((size1 % 8) ? 1 : 0)) * (size1 / 2); //得到字体一个字符对应点阵集所占的字节数
+    chr1 = chr - ' ';                                              //计算偏移后的值
+    for (i = 0; i < size2; i++)
+    {
+        if (size1 == 8)
+        {
+            temp = asc2_0806[chr1][i];
+        } //调用0806字体
+        else if (size1 == 12)
+        {
+            temp = asc2_1206[chr1][i];
+        } //调用1206字体
+        else if (size1 == 16)
+        {
+            temp = asc2_1608[chr1][i];
+        } //调用1608字体
+        else if (size1 == 24)
+        {
+            temp = asc2_2412[chr1][i];
+        } //调用2412字体
+        else
+            return;
+        for (m = 0; m < 8; m++)
+        {
+            if (temp & 0x01)
+                OLED_1li3_DrawPoint(x, y, mode);
+            else
+                OLED_1li3_DrawPoint(x, y, !mode);
+            temp >>= 1;
+            y++;
+        }
+        x++;
+        if ((size1 != 8) && ((x - x0) == size1 / 2))
+        {
+            x = x0;
+            y0 = y0 + 8;
+        }
+        y = y0;
+    }
 }
-void OLED_1in3_String(uint8_t x,uint8_t y,uint8_t *chr,uint8_t size,uint8_t mode)
+void OLED_1in3_String(uint8_t x, uint8_t y, uint8_t *chr, uint8_t size, uint8_t mode)
 {
-	while((*chr>=' ')&&(*chr<='~'))//判断是不是非法字符!
-	{
-		OLED_1in3_Char(x,y,*chr,size,mode);
-		if(size==8)x+=6;
-		else x+=size/2;
-		chr++;
-  }
+    while ((*chr >= ' ') && (*chr <= '~')) //判断是不是非法字符!
+    {
+        OLED_1in3_Char(x, y, *chr, size, mode);
+        if (size == 8)
+            x += 6;
+        else
+            x += size / 2;
+        chr++;
+    }
 }
+void OLED_1in3_Angle(uint32_t x, uint32_t y, float angle, uint32_t radius,uint8_t mode)
+{
+    int i;
+    int x0, y0;
+    double k = angle * (3.1415926535 / 180);
+    x0 = cos(k) * radius;
+    y0 = sin(k) * radius;
+    OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+}
+void OLED_1in3_AngleLine(uint32_t x, uint32_t y, float angle, uint32_t radius, uint32_t segment, uint8_t mode)
+{
+    int i;
+    int x0, y0;
+    double k = angle * (3.1415926535 / 180);
+    for (i = radius - segment; i < radius; i++)
+    {
+        x0 = cos(k) * i;
+        y0 = sin(k) * i;
+        OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+    }
+}
+/*
+函数功能：任意角度画直线 
+参    数：
+	x,y:坐标
+	du :度数
+	len :线段的长度
+	c  :颜色值 0或者1
+例如:OLED_DrawAngleLine(60,30,45,20,20,1);//角度画线
+*/
+void OLED_1in3_AngleLineEx(uint32_t x, uint32_t y, float angle, uint32_t radius, uint8_t mode)
+{
+    int i;
+    int x0, y0;
+    double k = angle * (3.1415926535L / 180);
 
+    for (i = 0; i < radius; i++)
+    {
+        x0 = cos(k) * i;
+        y0 = sin(k) * i;
+        OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+    }
+}

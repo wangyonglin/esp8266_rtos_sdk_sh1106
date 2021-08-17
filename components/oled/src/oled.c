@@ -12,6 +12,8 @@
 #include "driver/gpio.h"
 #include "driver/spi.h"
 #include <oled.h>
+#include <math.h>
+#include <OLED_1in3_c.h>
 void OLED_Init(void)
 {
     OLED_1li3_SystemInit();
@@ -32,4 +34,32 @@ void OLED_Integer(uint8_t x, uint8_t y, int32_t num, fontsize_t size)
 void OLED_Refresh()
 {
     OLED_1li3_Refresh();
+}
+
+/* 开机动画 */
+void Boot_Animation(void)
+{
+    static uint8_t x = 0, y = 0;
+    for (x = 63; x >= 18; x--)
+    {
+        OLED_1li3_DrawPoint(108 - 0.7 * x, x, 1); //画斜线 斜率≈√3/3
+        OLED_1li3_DrawPoint(17 + 0.7 * x, x, 1);
+        y = 64 - x;
+        OLED_1li3_DrawPoint(64 - 0.7 * y, y, 1);
+        OLED_1li3_DrawPoint(64 + 0.7 * y, y, 1);
+        vTaskDelay(100 / portTICK_RATE_MS);
+        OLED_1li3_Refresh(); //更新显示到OLED
+    }
+
+    for (x = 30; x <= 94; x++)
+    {
+        OLED_1li3_DrawPoint(125 - x, 47, 1);
+        OLED_1li3_DrawPoint(x, 18, 1);
+        vTaskDelay(100 / portTICK_RATE_MS);
+        OLED_1li3_Refresh(); //更新显示到OLED
+    }
+
+    OLED_1in3_String(60, 20, (uint8_t *)"E", XL, 1);
+    OLED_1li3_Refresh(); //更新显示到OLED
+    vTaskDelay(100 / portTICK_RATE_MS);
 }

@@ -64,5 +64,7 @@ void OLED_1li3_DrawLine(uint8_t x1,uint8_t y1,uint8_t x2,uint8_t y2,uint8_t mode
 void OLED_1li3_Picture(uint8_t x,uint8_t y,uint8_t sizex,uint8_t sizey,uint8_t BMP[],uint8_t mode);
 void OLED_1in3_Char(uint8_t x,uint8_t y,uint8_t chr,uint8_t size1,uint8_t mode);
 void OLED_1in3_String(uint8_t x,uint8_t y,uint8_t *chr,uint8_t size,uint8_t mode);
-
+void OLED_1in3_AngleLine(uint32_t x,uint32_t y,float angle,uint32_t radius,uint32_t segment,uint8_t mode);
+void OLED_1in3_AngleLineEx(uint32_t x,uint32_t y,float angle,uint32_t radius,uint8_t mode);
+void OLED_1in3_Angle(uint32_t x, uint32_t y, float angle, uint32_t radius,uint8_t mode);
 #endif

@@ -46,7 +46,8 @@ src/spi_oled_example_main.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/gpio_register.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/driver/spi.h \
  /root/esp/github/esp8266_spi_oled/components/oled/include/oled.h \
- /root/esp/github/esp8266_spi_oled/main/include/bmp.h
+ /root/esp/github/esp8266_spi_oled/main/include/bmp.h \
+ /root/esp/github/esp8266_spi_oled/components/oled/include/OLED_1in3_c.h
 
 /root/esp/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -141,4 +142,6 @@ src/spi_oled_example_main.o: \
 /root/esp/github/esp8266_spi_oled/components/oled/include/oled.h:
 
 /root/esp/github/esp8266_spi_oled/main/include/bmp.h:
+
+/root/esp/github/esp8266_spi_oled/components/oled/include/OLED_1in3_c.h:
 /root/esp/github/esp8266_spi_oled/main/src/spi_oled_example_main.c:

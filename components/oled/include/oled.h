@@ -12,4 +12,6 @@ void OLED_Init(void);
 void OLED_String(uint8_t x, uint8_t y, const char *chr, fontsize_t size);
 void OLED_Integer(uint8_t x, uint8_t y, int32_t num, fontsize_t size);
 void OLED_Refresh();
+
+void Boot_Animation(void);
 #endif
