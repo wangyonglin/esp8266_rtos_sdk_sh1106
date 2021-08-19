@@ -67,4 +67,5 @@ void OLED_1in3_String(uint8_t x,uint8_t y,uint8_t *chr,uint8_t size,uint8_t mode
 void OLED_1in3_AngleLine(uint32_t x,uint32_t y,float angle,uint32_t radius,uint32_t segment,uint8_t mode);
 void OLED_1in3_AngleLineEx(uint32_t x,uint32_t y,float angle,uint32_t radius,uint8_t mode);
 void OLED_1in3_Angle(uint32_t x, uint32_t y, float angle, uint32_t radius,uint8_t mode);
+int OLED_1in3_Format(uint8_t x, uint8_t y,uint8_t fontsize, uint8_t mode, const char *format,...);
 #endif

@@ -13,8 +13,9 @@
 #include "driver/gpio.h"
 #include "driver/spi.h"
 #include <oledfont.h>
+
 static const char *TAG = "OLED_1in3_c";
-uint8_t OLED_GRAM[128][8];
+uint8_t OLED_GRAM[144][8];
 void OLED_1li3_SystemInit(void)
 {
     gpio_config_t io_conf;
@@ -103,8 +104,8 @@ void OLED_1in3_DriverInit(void)
     OLED_1li3_WriteCommand(0x02); //
     OLED_1li3_WriteCommand(0xAa); // Disable Entire Display On (0xa4/0xa5)
     OLED_1li3_WriteCommand(0xA6); // Disable Inverse Display On (0xa6/a7)
-    OLED_1li3_WriteCommand(0xC0);
-    OLED_1li3_WriteCommand(0xA0);
+    OLED_1li3_WriteCommand(0xC8);
+    OLED_1li3_WriteCommand(0xA1);
     OLED_1in3_ClearAll();
     OLED_1li3_WriteCommand(0xAF); /*display ON*/
 
@@ -394,14 +395,27 @@ void OLED_1in3_String(uint8_t x, uint8_t y, uint8_t *chr, uint8_t size, uint8_t 
         chr++;
     }
 }
-void OLED_1in3_Angle(uint32_t x, uint32_t y, float angle, uint32_t radius,uint8_t mode)
+int OLED_1in3_Format(uint8_t x, uint8_t y, uint8_t fontsize, uint8_t mode, const char *format, ...)
 {
-    int i;
+    char buffer[512] = {0};
+    bzero(buffer, sizeof(buffer));
+    va_list args;
+    int rc;
+    va_start(args, format);
+    rc = vsprintf(buffer, format, args);
+    va_end(args);
+    ESP_LOGI(TAG, buffer);
+    OLED_1in3_String(x, y, (uint8_t *)buffer, fontsize, mode);
+
+    return rc;
+}
+void OLED_1in3_Angle(uint32_t x, uint32_t y, float angle, uint32_t radius, uint8_t mode)
+{
     int x0, y0;
     double k = angle * (3.1415926535 / 180);
     x0 = cos(k) * radius;
     y0 = sin(k) * radius;
-    OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+    OLED_1li3_DrawPoint(y - x0, x - y0, mode);
 }
 void OLED_1in3_AngleLine(uint32_t x, uint32_t y, float angle, uint32_t radius, uint32_t segment, uint8_t mode)
 {
@@ -412,7 +426,7 @@ void OLED_1in3_AngleLine(uint32_t x, uint32_t y, float angle, uint32_t radius, u
     {
         x0 = cos(k) * i;
         y0 = sin(k) * i;
-        OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+        OLED_1li3_DrawPoint(y - x0, x - y0, mode);
     }
 }
 /*
@@ -434,6 +448,6 @@ void OLED_1in3_AngleLineEx(uint32_t x, uint32_t y, float angle, uint32_t radius,
     {
         x0 = cos(k) * i;
         y0 = sin(k) * i;
-        OLED_1li3_DrawPoint(x + x0, y + y0, mode);
+        OLED_1li3_DrawPoint(y - x0, x - y0, mode);
     }
 }
