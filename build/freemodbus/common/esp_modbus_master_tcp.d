@@ -5,7 +5,7 @@ common/esp_modbus_master_tcp.o: \
  /root/esp/ESP8266_RTOS_SDK/components/freemodbus/common/include/esp_modbus_common.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
@@ -48,7 +48,7 @@ common/esp_modbus_master_tcp.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h:
 

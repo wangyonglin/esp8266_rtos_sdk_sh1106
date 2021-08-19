@@ -1,6 +1,6 @@
 source/startup.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/source/startup.c \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs_flash.h \
  /root/esp/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
@@ -83,7 +83,7 @@ source/startup.o: \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/include/freertos/task.h \
  /root/esp/ESP8266_RTOS_SDK/components/newlib/platform_include/esp_newlib.h
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/nvs_flash/include/nvs_flash.h:
 

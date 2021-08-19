@@ -2,7 +2,7 @@ port/portevent_m.o: \
  /root/esp/ESP8266_RTOS_SDK/components/freemodbus/port/portevent_m.c \
  /root/esp/ESP8266_RTOS_SDK/components/freemodbus/modbus/include/mb_m.h \
  /root/esp/ESP8266_RTOS_SDK/components/freemodbus/modbus/include/mbconfig.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/freemodbus/port/port.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
@@ -52,7 +52,7 @@ port/portevent_m.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/freemodbus/modbus/include/mbconfig.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/freemodbus/port/port.h:
 

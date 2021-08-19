@@ -3,7 +3,7 @@ source/esp_timer.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_timer.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
  /root/esp/ESP8266_RTOS_SDK/components/heap/include/esp_heap_caps.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/heap/port/esp8266/include/esp_heap_config.h \
  /root/esp/ESP8266_RTOS_SDK/components/log/include/esp_log.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
@@ -43,7 +43,7 @@ source/esp_timer.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/heap/include/esp_heap_caps.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/heap/port/esp8266/include/esp_heap_config.h:
 

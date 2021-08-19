@@ -16,7 +16,7 @@ port/esp8266/os_cpu_a.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/xtensa/xtruntime-frames.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/xtensa_timer.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/xtensa_rtos.h
 
 /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/xtensa/coreasm.h:
@@ -51,7 +51,7 @@ port/esp8266/os_cpu_a.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/xtensa_rtos.h:
 /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/os_cpu_a.S:

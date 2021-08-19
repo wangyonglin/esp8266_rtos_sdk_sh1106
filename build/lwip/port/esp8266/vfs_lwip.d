@@ -3,7 +3,7 @@ port/esp8266/vfs_lwip.o: \
  /root/esp/ESP8266_RTOS_SDK/components/vfs/include/esp_vfs.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/include/freertos/FreeRTOS.h \
  /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
@@ -79,7 +79,7 @@ port/esp8266/vfs_lwip.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/freertos/port/esp8266/include/freertos/FreeRTOSConfig.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/rom/ets_sys.h:
 

@@ -1,7 +1,7 @@
 lib/http_auth.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp_http_client/lib/http_auth.c \
  /root/esp/ESP8266_RTOS_SDK/components/tcpip_adapter/include/esp_netif.h \
- /root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_wifi_types.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_interface.h \
@@ -90,7 +90,7 @@ lib/http_auth.o: \
 
 /root/esp/ESP8266_RTOS_SDK/components/tcpip_adapter/include/esp_netif.h:
 
-/root/esp/github/esp8266_spi_oled/build/include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_wifi_types.h:
 

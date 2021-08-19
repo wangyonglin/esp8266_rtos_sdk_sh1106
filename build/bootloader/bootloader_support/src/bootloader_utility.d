@@ -1,6 +1,6 @@
 src/bootloader_utility.o: \
  /root/esp/ESP8266_RTOS_SDK/components/bootloader_support/src/bootloader_utility.c \
- /root/esp/github/esp8266_spi_oled/build/bootloader/../include/sdkconfig.h \
+ /root/esp/github/esp8266_rtos_sdk_sh1106/build/bootloader/../include/sdkconfig.h \
  /root/esp/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_config.h \
  /root/esp/ESP8266_RTOS_SDK/components/bootloader_support/include/esp_flash_data_types.h \
  /root/esp/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_utility.h \
@@ -23,7 +23,7 @@ src/bootloader_utility.o: \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_system.h \
  /root/esp/ESP8266_RTOS_SDK/components/esp8266/include/esp_idf_version.h
 
-/root/esp/github/esp8266_spi_oled/build/bootloader/../include/sdkconfig.h:
+/root/esp/github/esp8266_rtos_sdk_sh1106/build/bootloader/../include/sdkconfig.h:
 
 /root/esp/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_config.h:
 
