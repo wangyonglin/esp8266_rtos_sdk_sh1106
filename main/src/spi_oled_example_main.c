@@ -39,13 +39,13 @@ void app_main(void)
 	oled_sh1106_angle_line(compass_x, compass_y, 315, 32, 4, 1);
 	oled_sh1106_angle_line(compass_x, compass_y, 360, 32, 4, 1);
 	oled_sh1106_refresh();
+
 	for (int n = 0; n < 360; n++)
 	{
-	
+		oled_sh1106_angle_line(compass_x, compass_y, n-1, 28, 26, 0);
 		oled_sh1106_angle_line(compass_x, compass_y, n, 28, 26, 1);
-		
 		oled_sh1106_refresh();
 	}
-	oled_sh1106_refresh();
+
 	vTaskDelay(5000 / portTICK_RATE_MS);
 }

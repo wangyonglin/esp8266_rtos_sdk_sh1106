@@ -1,1 +1,1 @@
-26c3d87-dirty spi_oled v3.4-28-g08e225dd-dirty
+eeb42c2-dirty spi_oled v3.4-28-g08e225dd-dirty
